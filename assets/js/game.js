@@ -11,7 +11,7 @@ var enemyHealth = 50;
 var enemyAttack = 12;
 
 
-
+// function to fight 
 var fight = function(enemyName) {
     while (enemyHealth > 0 && playerHealth > 0) {
 
@@ -28,13 +28,13 @@ var fight = function(enemyName) {
                 
                 window.alert(playerName + " has decided to skip this fight. Goodbye!");
                 // subtract money from playerMoney for skipping
-                playerMoney = playerMoney - 10;
+                playerMoney = Math.max(0, playerMoney - 10);
                 console.log("playerMoney", playerMoney);
                 break;
             }
             // if no (false), ask question again by running fight() again
             else {
-              fight();
+              fight();0.
             }
         }
        /* else{
@@ -44,8 +44,10 @@ var fight = function(enemyName) {
 
         if(promptFight === "fight" || promptFight === "FIGHT") {
     
-          // remove enem's health by subtracting the amount set in the playerAttack variable
-          enemyHealth = enemyHealth - playerAttack;
+            // generate radom damage value based on player's attack power
+            var damage = randomNumber(playerAttack - 3, playerAttack);
+
+            enemyHealth = Math.max(0, enemyHealth - damage);
     
           console.log(playerName + " attacked " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health remaining.");
          
@@ -61,8 +63,9 @@ var fight = function(enemyName) {
             }
     
             // remove player's health by subtracting the amount set in the enemyAttack variable
-    
-            playerHealth = playerHealth - enemyAttack;
+            var damage = randomNumber(enemyAttack - 3, enemyAttack);
+
+            playerHealth =Math.max(0, playerHealth - damage);
         
             console.log(enemyName + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining.");
         
@@ -82,6 +85,7 @@ var fight = function(enemyName) {
 
 }
 
+// function to start the game
 var startGame = function() {
     
     //reset player stats
@@ -97,7 +101,7 @@ var startGame = function() {
        
            var pickedEnemyName = enemyNames[i];
        
-           enemyHealth = 50;
+           enemyHealth = randomNumber(40, 60);
            
            fight(pickedEnemyName);
             // if player is still alive and we're not at the last enemy in the array call the shop function.
@@ -147,6 +151,7 @@ function endGame() {
     }
 }
 
+// function for shopping
 function shop() {
     // ask plyer what they'd like to do
     var shopOptionPrompt =  window.prompt(
@@ -208,3 +213,12 @@ function shop() {
     }
 
 }
+
+// function to generate a radom numeric value
+function randomNumber(min, max) {
+    var value = Math.floor(Math.random() * (max-min +1) + min);
+    
+    return value;
+}
+
+//stop @ 3.4.4
